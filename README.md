@@ -1,95 +1,124 @@
-# 🎬 AI 视频微短剧分镜编剧 Skill (v1.2.1)
+# 🎬 AI 视频微短剧分镜导演 Skill 2.0 (v2.0.0)
 
-> 将故事创意、大纲或剧本转化为符合影视视听语言的工业级标准化分镜表，输出深度兼容 Midjourney / Flux / Runway / Kling / MiniMax 等主流 AI 视频生成工具链的多模态参考参数（`--cref` / `--sref` / `--oref`）与官方运镜控制指令。
+> **工业级 AI 视频分镜与爆款微短剧编剧系统**：深度融合**商业短剧钩子剧作哲学**、**世界大师级视听导演文法**与**现代 I2V 多模态 AI 生成管线**，将故事创意、大纲或剧本转化为符合电影视听语言的标准化工业分镜表，输出深度兼容 Midjourney / Flux / Runway / Kling / MiniMax 的多模态资产控制参数（`--cref` / `--oref` / `--sref`）与平台官方运镜指令。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-1.2.1-blue.svg)]()
-[![Architecture](https://img.shields.io/badge/Architecture-Dual--Mode%20Production%20Core-purple.svg)]()
-[![Stack](https://img.shields.io/badge/AI%20Stack-Midjourney%20%7C%20Flux%20%7C%20Runway%20%7C%20Kling%20%7C%20MiniMax-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)]()
+[![Architecture](https://img.shields.io/badge/Architecture-Tri--Pillar%20Cinematic%20Engine-purple.svg)]()
+[![Tests](https://img.shields.io/badge/Contract%20Tests-Passing%20(100%25)-success.svg)]()
+[![AI Stack](https://img.shields.io/badge/AI%20Stack-Midjourney%20v6%2Fv7%20%7C%20Flux%20%7C%20Runway%20%7C%20Kling%20%7C%20MiniMax-green.svg)]()
 
 ---
 
-## 📌 核心定位与设计哲学
+## 🚀 2.0 里程碑升级：三大支柱融合体系
 
-专为 **1~3 分钟** 微短剧、电影级叙事短片及 AI 视频前期卡前设计（Pre-visualization）打造。
+本版本（v2.0.0）吸纳并重构了业内两大标杆开源 Skill 的核心设计哲学，打造了兼具**商业爆发力**、**大师级视听美学**与**AI 工业物理可行性**的三位一体引擎：
 
-> [!IMPORTANT]
-> **最高原则：绝不允许为了死板满足规则而牺牲影视叙事逻辑与视听张力！**  
-> 规则是保障 AI 视频生成可行性与空间几何严谨性的工业底线，而镜头的灵魂在于叙事推进、人物情绪起伏与观众心理节奏。
+```
+                              ┌──────────────────────────────────────────────┐
+                              │       🎬 AI 视频微短剧分镜导演 Skill 2.0      │
+                              └──────────────────────┬───────────────────────┘
+                                                     │
+            ┌────────────────────────────────────────┼────────────────────────────────────────┐
+            ▼                                        ▼                                        ▼
+┌──────────────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────────────┐
+│  🔥 商业短剧爆款剧作哲学     │ │   🎥 大师级电影视听调度文法            │ │   ⚙️ 现代 AI 多模态工程管线    │
+│ (汲取 short-drama-skill)     │ │   (汲取 storyboard-director)         │ │   (原生工业级物理底座)       │
+├──────────────────────────────┤ ├──────────────────────────────────────┤ ├──────────────────────────────┤
+│ • 黄金前 3 秒抢夺注意力法则   │ │ • 6 大对话视觉化引擎 (拒绝站桩打乒乓球)│ │ • I2V 首帧/首尾帧多模态管线  │
+│ • 5 大剧作钩子体系           │ │ • 空间连续性与状态账本 (道具/外观守恒)│ │ • MJ v6 --cref / v7 --oref   │
+│ • 单集心电图微结构四段波形   │ │ • 前景几何遮挡与纵深调度             │ │ • Kling / Runway 官方运镜滑块│
+│ • 5 大爽点与压抑释放矩阵     │ │ • 20 位世界大师导演视听风格库        │ │ • 单一微动作防畸变物理铁律   │
+│ • 卡点悬念 Cliffhanger 设计   │ │ • 视线守恒与 180° 轴线硬约束         │ │ • 台词字数 ≤ 时长 × 4.5 极限 │
+└──────────────────────────────┘ └──────────────────────────────────────┘ └──────────────────────────────┘
+```
+
+1. **汲取 [Puhua-AI-Research/short-drama-skill](https://github.com/Puhua-AI-Research/short-drama-skill) 的商业剧作精髓**：
+   - **黄金 3 秒法则**：前 3 秒（镜 01-02）必须掷出生死悬念、剧烈冲突、认知颠覆、视觉奇观或身份反转强钩子。
+   - **单集心电图微结构波形**：单集 1~3 分钟严格执行“0-5s 钩子爆破 ➔ 5-25s 递进压抑 ➔ 25-45s 峰值转折 ➔ 45s+ 悬念卡点”。
+   - **5 大爽点释放矩阵**：打脸反转、极限脱险、认知打破、身份曝光、情绪升华。
+2. **汲取 [katarakinkim-arch/storyboard-director](https://github.com/katarakinkim-arch/storyboard-director) 的大师级视听导演调度**：
+   - **6 大对话视觉化引擎**：道具 (Props)、距离 (Distance)、空间 (Environment)、任务 (Task)、秘密 (Secret)、观察者 (Observer)，彻底终结无趣的“两人干站着对话”。
+   - **空间连续性与状态账本**：跟踪道具物理位置、服装污损、角色的不可逆状态位移。
+   - **前景几何纵深与 20 位世界大师导演风格库**：大卫·芬奇冷峻高反差、王家卫抽帧色彩、诺兰时间错位、奉俊昊阶级几何等。
+3. **原生工业级物理底座与自动化质量契约**：
+   - **防畸变单一微动态**：一镜一动作，严禁复合运动，物理杜绝 AI 穿模。
+   - **普通话发音物理制约**：严格执行单镜头台词字数 `≤ 时长 × 4.5 字`，杜绝音画穿帮。
+   - **自动化契约测试套件 (`tests/test_storyboard_contract.py`)**：确保时间戳数学累加精确至 0.1s，全片时长无算术矛盾。
 
 ---
 
 ## 🌟 官方实战案例直观展示（Featured Showcase）
 
-为让用户能最直观地感受本 Skill 的实际输出效果，本项目内置了一份完整的**9:16 竖屏科幻悬疑微短剧**示范全案：
+本项目内置了一份经过自动化契约测试检验的 **9:16 竖屏科幻悬疑微短剧** 示范全案：
 
 ### 📺 案例：《我死后的第七天，AI给我打来了电话》
 - **剧本原点**：程序员在妹妹去世第七天接到她的来电，电话警告“别碰电脑”，电脑屏幕却打出“她在骗你”……
 - **输出成果**：[👉 查看完整 26 镜工业级分镜全案 (examples/ai_call_showcase.md)](examples/ai_call_showcase.md)
 
-#### 🚀 Skill 核心转化亮点展示：
-| 转化维度 | 用户原始初稿 | Skill 工业级视听重构 |
+#### 🚀 Skill 2.0 工业级转化亮点：
+| 转化维度 | 用户原始初稿 | Skill 2.0 工业级视听重构 |
 |---|---|---|
-| **画幅与构图** | 抽象描述 | **9:16 竖屏电影级构图**，生图词带 `--ar 9:16 --style raw`，增强纵向窒息感 |
-| **音画台词匹配** | 台词塞爆（如 2 秒塞 32 字） | **人类发音物理受控**：严格限制字数 `≤ 秒数 × 4.5 字`，杜绝配音穿帮 |
-| **动作安全度** | 复合动作（“踉跄后退撞翻椅子”） | **严格单一微动态拆解**：镜 18（失力后退）+ 镜 19（办公椅倒地特写），消除 AI 穿模 |
-| **剪辑节奏** | 机械定长 | **蒙太奇快慢相间**：悬念建立（2.0s~2.5s）→ 危机高潮（1.0s 快切）→ 终极反转（2.0s~2.5s 缓释），精确 45.0 秒累加 |
-| **角色连续性** | 仅纯文字 Prompt（必然漂移） | **绑定多模态参考图资产**：`--cref [URL] --cw 100`（锁定林川病容面容与灰卫衣）+ I2V 首帧管线 |
+| **商业黄金 3 秒** | 慢悠悠介绍环境背景 | **生死悬念秒切入**：暴雨雷鸣中突发亡妹来电，手机冷光震动撕裂黑暗 |
+| **对话视听化引擎** | 角色站桩打电话 | **任务与秘密引擎**：林川一边屏息接电话一边颤抖敲键盘，屏幕弹出反向警示暗流涌动 |
+| **画幅与构图** | 抽象文字描述 | **9:16 竖屏大师级构图**，生图词标配 `--ar 9:16 --style raw`，增强纵向心理压迫感 |
+| **音画台词匹配** | 台词塞爆（2 秒塞 30 字） | **人类发音物理受控**：严格限制字数 `≤ 秒数 × 4.5 字`，长台词拆分并配合倾听反应镜 |
+| **动作安全度** | 复合动作（后退撞翻椅子） | **严格单一微动态拆解**：镜 18（失力后退）+ 镜 19（办公椅倒地特写），消除 AI 穿模 |
+| **剪辑节奏** | 机械定长 | **蒙太奇快慢相间**：悬念建立（2.0s~2.5s）➔ 危机高潮（1.0s 快切）➔ 终极反转（2.0s~2.5s），45.0s 严格累加 |
+| **多模态连续性** | 纯文字 Prompt（必然漂移） | **绑定多模态资产**：`--cref [URL] --cw 100`（锁定面容与衣着）+ I2V 首帧首尾帧管线 |
 | **声音设计** | 粗略音效 | **全流程四轨工程**：Ambience（雨夜底噪）、Foley（按键拟音）、SFX（警报电磁）、BGM（大提琴史诗悲鸣） |
-
-#### 🎬 分镜表精彩片段预览（节选自 PART 4）：
-| 镜号（时间戳） | 画面与动作描述 (单一微动态) | 英文生图与运镜控制提示词 | 旁白 / 对白 (字数受控) | 景别与机位 | 音效与声音设计 |
-|---|---|---|---|---|---|
-| **01** (00:00.0-00:02.5)<br>时长: 2.5s | 竖屏全景建立：昏暗狭窄的出租屋内暴雨抽打窗户。林川穿着宽大灰卫衣孤身弓背坐在电脑前，桌上一张发黄的兄妹合照泛着微光。 | 🖼️ **IMG**:<br>`Vertical 9:16 establishing shot, dark apartment at midnight, rain on window, pale East Asian man in oversized hoodie at glowing desk, framed photo, deep cyan shadows --ar 9:16 --style raw --sref https://asset.film/styles/cyber_noir_bedroom.png`<br>🎬 **MOT**:<br>`Camera: Slow Zoom In (Speed 1). Subject: minimal breathing movement.` | `[无台词]` | **WS**<br>垂直俯角慢推 | **Amb**: 窗外密集雨声雷鸣<br>**Fol**: 主机风扇低频嗡鸣<br>**BGM**: 孤寂电钢琴单音（A minor） |
-| **02** (00:02.5-00:04.0)<br>时长: 1.5s | 桌面手部微距：放在桌角右侧的手机屏幕骤然亮起刺眼白光并持续剧烈震动。屏幕显示来电人：“妹妹——林小雨”。 | 🖼️ **IMG**:<br>`Macro close-up vertical shot of smartphone vibrating intensely, screen displaying incoming call "Sister - Lin Xiaoyu", shallow depth of field --ar 9:16 --style raw`<br>🎬 **MOT**:<br>`Camera: Static macro. Subject: phone vibrating slightly on desk surface.` | `[无台词]` | **ECU**<br>微距俯拍固定 | **Fol**: 手机高频震动摩擦声<br>**SFX**: 电子来电急促蜂鸣<br>**BGM**: 钢琴骤停，低频嗡鸣升起 |
-| **03** (00:04.0-00:05.5)<br>时长: 1.5s | 林川面部特写：手机冷白光照亮他惨白的面孔。他瞳孔猛烈收缩，喉结上下剧烈滑动，眼神陷入极度恐惧。 | 🖼️ **IMG**:<br>`Vertical close-up of East Asian man 25yo, pale skin with dark circles, messy black hair, cold screen light, pupils dilated in terror --ar 9:16 --style raw --cref https://asset.film/chars/lin_chuan_ref.png --cw 100`<br>🎬 **MOT**:<br>`Camera: Static. Subject: sudden pupil constriction, rapid throat swallow.` | 林川（极度颤抖，6字）：<br>“小雨……已经死了。” | **CU**<br>正面平视固定 | **Amb**: 空间死寂<br>**Fol**: 极沉重的倒抽凉气声<br>**BGM**: 大提琴不协和长音升至 7.0 |
-
-> 完整 26 镜请参阅：[👉 examples/ai_call_showcase.md](examples/ai_call_showcase.md)
 
 ---
 
-## 📂 项目结构
+## 📂 项目完整架构
 
 ```
 AI_grenerate_content_skill/
-├── README.md                           # 项目说明与工业指南
+├── README.md                               # 项目说明与 2.0 工业全景指南
+├── LICENSE                                 # MIT 开源许可证
 ├── examples/
-│   └── ai_call_showcase.md             # 官方示范全案（《我死后的第七天，AI给我打来了电话》26镜竖屏工业全案）
+│   └── ai_call_showcase.md                 # 官方示范全案（26镜竖屏《我死后的第七天，AI给我打来了电话》）
+├── tests/
+│   └── test_storyboard_contract.py         # 自动化分镜契约测试（时间戳/台词字数/AC标准/结构门禁）
 └── skills/
     └── ai-video-storyboard/
-        ├── SKILL.md                    # 核心 System Prompt（自包含工业闭环内核 v1.2.1）
+        ├── SKILL.md                        # 核心 System Prompt（自包含工业闭环内核 v2.0.0）
         └── references/
-            ├── production_example.md   # 生产级示范案例备份
-            ├── storyboard_schema.json  # 工业级 17 字段 JSON Schema（支持自动化流水线对接）
-            ├── prompt_engineering_guide.md # 现代 AI 工具官方参数与 I2V 管线手册
-            ├── validation_checklist.md # 自动化七项自检与 13 项验收标准手册
-            └── cinematic_language_guide.md # 影视视听语言与景别运镜语法速查
+            ├── short_drama_hook_matrix.md   # [新增] 商业微短剧黄金前 3 秒、5 大钩子与心电图波形
+            ├── director_visual_engines.md  # [新增] 6 大对话视觉引擎、状态账本与 20 位大师导演风格库
+            ├── prompt_engineering_guide.md # 现代 AI 工具官方参数与 I2V 管线手册 (MJ v6/v7、Runway、Kling)
+            ├── validation_checklist.md     # 自动化七项自检与 13 项验收标准手册 (AC-01 ~ AC-13)
+            ├── storyboard_schema.json      # 工业级 17+ 字段 JSON Schema v2.0 (支持自动化流水线)
+            ├── cinematic_language_guide.md # 影视视听语言与景别运镜语法速查
+            └── production_example.md       # 生产级示范案例备份
 ```
 
 ---
 
 ## 🚀 六大模块输出排版契约 (PART 1 ~ PART 6)
 
+每一次交付严格按照标准契约生成：
+
 ```
 用户输入（故事/剧本/创意）
         │
         ▼
-[PART 1] 剧作七维架构解构卡           ── 事件、动机、关系、攻防态势、空间、张力曲线、影调
+[PART 1] 剧作七维架构与微短剧钩子波形卡 ── 剧作解构 + 黄金前 3 秒钩子类型 + 单集心电图微结构波形
         │
         ▼
-[PART 2] 视觉资产与多模态锚点锁定卡   ── 绑定 --cref / --oref 角色参考、--sref 风格参考与服装道具
+[PART 2] 视觉资产与多模态锚点锁定卡     ── 绑定 --cref / --oref 角色参考、--sref 风格参考与大师美学锚点
         │
         ▼
-[PART 3] 场景空间几何与 180° 轴线规划 ── 确立三维坐标、左右视线、摄影机安全半圆
+[PART 3] 场景空间几何与 180° 轴线账本  ── 确立三维坐标、左右视线、摄影机安全半圆、连续性状态与道具账本
         │
         ▼
-[PART 4] 工业级标准化分镜表 (6 列表格)── 镜号时码、单一微动态、双通道提示词、字数受控台词、景别运镜、四轨音频
+[PART 4] 工业级标准化分镜表 (6 列表格) ── 镜号时码、单一微动作、双通道提示词(含视觉引擎)、字数受控台词、景别运镜、四轨音频
         │
         ▼
-[PART 5] 自动化七项深度规则自检报告   ── 严格按 Item 1 至 Item 7 客观真实审查判定
+[PART 5] 自动化七项深度规则自检报告     ── 严格按 Item 1 至 Item 7 客观真实审查判定
         │
         ▼
-[PART 6] 反馈与局部重构指引           ── 锁定未变镜头，维护剪辑点，时码自动重排
+[PART 6] 反馈与局部重构指引             ── 锁定未变镜头，维护剪辑点，时码自动重排
 ```
 
 ---
@@ -114,6 +143,23 @@ AI_grenerate_content_skill/
 
 ---
 
+## 🛠️ 自动化测试验证
+
+本项目配备了完整的自动化契约测试套件，在发布与持续集成阶段守护交付质量：
+
+```bash
+# 运行分镜工业契约测试
+python -m unittest tests/test_storyboard_contract.py
+```
+
+测试覆盖点包括：
+- [x] 时间戳连续性与单镜头时长安全窗口校验 (0.5s ~ 3.5s)
+- [x] 普通话对白字数物理发音极限校验 (`≤ duration * 4.5 字`)
+- [x] 13 项验收标准 (AC-01 ~ AC-13) 编号一致性与完整度校验
+- [x] PART 1 至 PART 6 结构化交付契约门禁校验
+
+---
+
 ## 🛠️ 兼容现代 AI 工具链
 
 | 环节 | 主流支持工具 | 工业控制标准 |
@@ -126,9 +172,9 @@ AI_grenerate_content_skill/
 
 ## 📖 使用方法
 
-1. **直接作为 System Prompt**：复制 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 纯文本至你的 AI 平台（Claude、ChatGPT、Dify、Antigravity IDE）。
-2. 输入你的故事或剧本。
-3. 系统将全自动完成七维解构、多模态资产绑定、轴线推演、分镜生成与自检报告交付！
+1. **直接作为 System Prompt**：复制 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 纯文本至你的 AI 平台（Claude、ChatGPT、Dify、Coze、Antigravity IDE）。
+2. 输入你的故事或剧本原点，告知期望片长、画幅（16:9 横屏 / 9:16 竖屏）与首选 AI 视频工具。
+3. 系统将全自动完成七维解构、爆款钩子注入、视觉引擎调度、轴线推演、分镜生成与七项真实自检！
 
 ---
 

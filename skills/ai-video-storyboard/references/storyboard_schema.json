@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "IndustrialAIVideoStoryboardShot",
-  "description": "工业级 AI 视频分镜单镜头数据结构规范 (17 个核心维度)，支持 ComfyUI、剪映草稿及自动化 API 生产流水线",
+  "title": "IndustrialAIVideoStoryboardShotV2",
+  "description": "工业级 AI 视频微短剧分镜单镜头数据结构规范 v2.0 (融合商业短剧钩子、6大对话视觉引擎与大师导演视听风格)，支持 ComfyUI、剪映草稿及自动化 API 生产流水线",
   "type": "object",
   "required": [
     "shot_id",
@@ -104,6 +104,21 @@
       "enum": ["facial_closeup", "hand_micro_action", "body_posture_tension", "neutral", "none"],
       "description": "情绪外化表达形式"
     },
+    "visual_engine": {
+      "type": "string",
+      "enum": ["props", "distance", "environment", "task", "secret", "observer", "none"],
+      "description": "6 大对话视觉化引擎 (道具/距离/空间/任务/秘密/观察者)"
+    },
+    "hook_type": {
+      "type": "string",
+      "enum": ["mortal_peril", "violent_conflict", "cognitive_disruption", "visual_spectacle", "identity_reversal", "none"],
+      "description": "短剧黄金前 3 秒钩子类型"
+    },
+    "director_style": {
+      "type": "string",
+      "description": "20 位世界大师导演视听文法风格 (如 'David Fincher', 'Wong Kar-wai', 'Denis Villeneuve', 'Bong Joon-ho')",
+      "example": "David Fincher"
+    },
     "visual_description_cn": {
       "type": "string",
       "description": "中文镜头画面与动作视听描述 (单微动态)"
@@ -151,7 +166,9 @@
         "axis_pass": { "type": "boolean" },
         "emotion_closeup_pass": { "type": "boolean" },
         "single_micro_action_pass": { "type": "boolean" },
-        "continuity_pass": { "type": "boolean" }
+        "continuity_pass": { "type": "boolean" },
+        "speech_rate_pass": { "type": "boolean" },
+        "rhythm_waveform_pass": { "type": "boolean" }
       }
     }
   }
