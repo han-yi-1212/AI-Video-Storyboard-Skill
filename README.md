@@ -1,10 +1,10 @@
-# 🎬 AI 视频微短剧分镜编剧 Skill (v1.1.0)
+# 🎬 AI 视频微短剧分镜编剧 Skill (v1.2.0)
 
 > 将故事创意、大纲或剧本转化为符合影视视听语言的工业级标准化分镜表，输出深度兼容 Midjourney / Flux / Runway / Kling / MiniMax 等主流 AI 视频生成工具链的多模态参考参数（`--cref` / `--sref`）与官方运镜控制指令。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)]()
-[![Architecture](https://img.shields.io/badge/Architecture-Modular%20Reference%20Design-purple.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.2.0-blue.svg)]()
+[![Architecture](https://img.shields.io/badge/Architecture-Dual--Mode%20Production%20Core-purple.svg)]()
 [![Stack](https://img.shields.io/badge/AI%20Stack-Midjourney%20%7C%20Flux%20%7C%20Runway%20%7C%20Kling%20%7C%20MiniMax-green.svg)]()
 
 ---
@@ -17,13 +17,16 @@
 > **最高原则：绝不允许为了死板满足规则而牺牲影视叙事逻辑与视听张力！**  
 > 规则是保障 AI 视频生成可行性与空间几何严谨性的工业底线，而镜头的灵魂在于叙事推进、人物情绪起伏与观众心理节奏。
 
-### 🌟 v1.1.0 架构升级亮点
-1. **模块化解耦（轻量化内核）**：将重型示例与 JSON Schema 移至 `references/` 目录，主文件大幅瘦身，节约 80% 上下文消耗，显著提升指令遵循度。
-2. **现代多模态参考管线（I2V）**：拥抱最新行业标准，引入 Midjourney 官方 `--cref`（角色参考）/ `--sref`（风格参考）与 Image-to-Video 首帧控制，彻底解决角色外观漂移问题。
-3. **真实官方运镜参数**：摒弃自创伪语法，完全对齐 Runway Gen-3 官方 Camera Control 与可灵 Kling 1.6+ 官方 6 轴运镜滑块。
-4. **严格单一微动态（Single Micro-action Protocol）**：严厉杜绝单镜头内的复合动作（如拆解复合动作、杜绝假自检），消除 AI 视频生成穿模与四肢畸变。
-5. **动态蒙太奇剪辑节拍**：打破清一色死板固定时长，动作悬疑段落引入 1.0s~1.5s 快切（Quick cuts），长短结合赋予视听呼吸感。
-6. **自动化七项自检严密对齐**：正文定义的 7 项自检（Item 1 至 Item 7）与报告输出一字不差地精准对齐，杜绝模型假自评。
+---
+
+## 🌟 v1.2.0 工业级双模架构 (Dual-Mode Production)
+
+针对传统 Skill 容易出现“外部引用失效”或“主文件与配套文档版本漂移”的痛点，v1.2.0 采用**双模闭环设计**：
+
+1. **单文件独立自包含（Standalone Mode）**：
+   - 即使脱离配套目录，直接将 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 复制到任意 AI 平台（ChatGPT、Claude、Dify 等）作为单一 System Prompt，它自身已完整内置 **13 项验收标准 (AC-01~13)**、**自动化七项自检 (Item 1~7)**、**多模态一致性规范** 与 **生产级示范案例**，完全自闭环运行。
+2. **知识库深度联动（Agent Workspace Mode）**：
+   - 在支持目录读取的智能体环境中，`SKILL.md` 正文显式链接到 `references/` 目录中的专门手册（包含 17 字段 JSON Schema、官方运镜参数速查、视听语言决策树等），实现深度扩展。
 
 ---
 
@@ -34,11 +37,11 @@ AI_grenerate_content_skill/
 ├── README.md                           # 项目说明与工业指南
 └── skills/
     └── ai-video-storyboard/
-        ├── SKILL.md                    # 核心 System Prompt（轻量化高密度执行内核）
+        ├── SKILL.md                    # 核心 System Prompt（自包含完整闭环内核 v1.2.0）
         └── references/
-            ├── production_example.md   # 工业生产级示范案例（快慢切节奏 / --cref 资产 / 真实自检）
+            ├── production_example.md   # 生产级示范案例（快慢切节奏 / --cref 多模态资产 / 真实七项自检）
             ├── storyboard_schema.json  # 工业级 17 字段 JSON Schema（支持自动化流水线对接）
-            ├── prompt_engineering_guide.md # 现代 AI 工具参数与 I2V 管线手册
+            ├── prompt_engineering_guide.md # 现代 AI 工具官方参数与 I2V 管线手册
             ├── validation_checklist.md # 自动化七项自检与 13 项验收标准手册
             └── cinematic_language_guide.md # 影视视听语言与景别运镜语法速查
 ```
@@ -75,7 +78,7 @@ AI_grenerate_content_skill/
 
 | 编号 | 验收维度 | 核心检验逻辑与合格判定条件 |
 |:---:|---|---|
-| **AC-01** | **镜头时长硬约束** | 100% 镜头时长处于 1.0s~3.0s 安全窗口，无超长镜头。 |
+| **AC-01** | **镜头时长安全窗口** | 全片 100% 镜头处于安全窗口内（默认 ≤ 3.0s，或符合指定模型窗口）。 |
 | **AC-02** | **剪辑节拍呼吸感** | 全片时长打破死板统一定长，高潮动作戏配置 1.0s~1.5s 快切，快慢张弛有度。 |
 | **AC-03** | **轴线空间合理性** | 双人及多人交互全流程无违规跳轴，视线对撞吻合空间几何。 |
 | **AC-04** | **越轴过渡合规性** | 艺术越轴必须具备轨道移动镜头、中性正面镜头或走位过渡。 |
@@ -85,7 +88,7 @@ AI_grenerate_content_skill/
 | **AC-08** | **角色多模态连续性** | 角色显式绑定 `--cref` 或 I2V 首帧参考资产，全片英文外观描述严格一致。 |
 | **AC-09** | **服装与道具守恒性** | 同序列内服装款式、面料颜色及道具持有状态严格闭环。 |
 | **AC-10** | **光影氛围统一性** | 场景提示词中的主光源方向、色温与胶片调色词统一锁定。 |
-| **AC-11** | **生图 Prompt 规范** | IMG 提示词完全符合 Midjourney / Flux 语法并带 `--ar 16:9`。 |
+| **AC-11** | **生图 Prompt 规范** | IMG 提示词完全符合 Midjourney / Flux 语法并带 `--ar 16:9` 与 `--style raw`。 |
 | **AC-12** | **运镜官方参数规范** | MOT 提示词采用各平台官方运镜参数（Runway 运镜 / Kling 1.6+ 轴向滑块参数）。 |
 | **AC-13** | **自检报告对齐完整** | 输出报告严格包含第 1 项至第 7 项完整真实审查结果，且所有红线项全部为 PASS。 |
 
@@ -103,8 +106,8 @@ AI_grenerate_content_skill/
 
 ## 📖 使用方法
 
-1. 将 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 作为 System Prompt 加载到你的 AI 平台（如 Antigravity IDE、ChatGPT、Claude、Cursor、Dify 等）。
-2. 输入故事、剧本或创意。
+1. **直接作为 System Prompt**：复制 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 纯文本至你的 AI 平台（Claude、ChatGPT、Dify、Antigravity IDE）。
+2. 输入你的故事或剧本。
 3. 系统将全自动完成七维解构、多模态资产绑定、轴线推演、分镜生成与自检报告交付！
 
 ---
