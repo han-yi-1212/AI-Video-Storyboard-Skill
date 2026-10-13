@@ -19,14 +19,31 @@
 
 ---
 
-## 🌟 v1.2.0 工业级双模架构 (Dual-Mode Production)
+## 🌟 官方实战案例直观展示（Featured Showcase）
 
-针对传统 Skill 容易出现“外部引用失效”或“主文件与配套文档版本漂移”的痛点，v1.2.0 采用**双模闭环设计**：
+为让用户能最直观地感受本 Skill 的实际输出效果，本项目内置了一份完整的**9:16 竖屏科幻悬疑微短剧**示范全案：
 
-1. **单文件独立自包含（Standalone Mode）**：
-   - 即使脱离配套目录，直接将 [SKILL.md](skills/ai-video-storyboard/SKILL.md) 复制到任意 AI 平台（ChatGPT、Claude、Dify 等）作为单一 System Prompt，它自身已完整内置 **13 项验收标准 (AC-01~13)**、**自动化七项自检 (Item 1~7)**、**多模态一致性规范** 与 **生产级示范案例**，完全自闭环运行。
-2. **知识库深度联动（Agent Workspace Mode）**：
-   - 在支持目录读取的智能体环境中，`SKILL.md` 正文显式链接到 `references/` 目录中的专门手册（包含 17 字段 JSON Schema、官方运镜参数速查、视听语言决策树等），实现深度扩展。
+### 📺 案例：《我死后的第七天，AI给我打来了电话》
+- **剧本原点**：程序员在妹妹去世第七天接到她的来电，电话警告“别碰电脑”，电脑屏幕却打出“她在骗你”……
+- **输出成果**：[👉 查看完整 26 镜工业级分镜全案 (examples/ai_call_showcase.md)](examples/ai_call_showcase.md)
+
+#### 🚀 Skill 核心转化亮点展示：
+| 转化维度 | 用户原始初稿 | Skill 工业级视听重构 |
+|---|---|---|
+| **画幅与构图** | 抽象描述 | **9:16 竖屏电影级构图**，生图词带 `--ar 9:16 --style raw`，增强纵向窒息感 |
+| **动作安全度** | 复合动作（“踉跄后退撞翻椅子”） | **严格单一微动态拆解**：镜 18（失力后退）+ 镜 19（办公椅倒地特写），彻底消除 AI 穿模 |
+| **剪辑节奏** | 机械定长 | **蒙太奇快慢相间**：悬念建立（2.0s~2.5s）→ 危机高潮（1.0s 快切）→ 终极反转（2.0s~2.5s 缓释） |
+| **角色连续性** | 仅纯文字 Prompt（必然漂移） | **绑定多模态参考图资产**：`--cref [URL] --cw 100`（锁定林川病容面容与灰卫衣）+ I2V 首帧管线 |
+| **声音设计** | 粗略音效 | **全流程四轨工程**：Ambience（雨夜底噪）、Foley（按键拟音）、SFX（警报电磁）、BGM（大提琴史诗悲鸣） |
+
+#### 🎬 分镜表精彩片段预览（节选自 PART 4）：
+| 镜号（时间戳） | 画面与动作描述 (单一微动态) | 英文生图与运镜控制提示词 | 旁白 / 对白 | 景别与机位 | 音效与声音设计 |
+|---|---|---|---|---|---|
+| **01** (00:00-00:02.5)<br>时长: 2.5s | 竖屏全景建立：昏暗狭窄的出租屋内暴雨抽打窗户。林川穿着宽大灰卫衣孤身弓背坐在电脑前，桌上一张发黄的兄妹合照泛着微光。 | 🖼️ **IMG**:<br>`Vertical 9:16 establishing shot, dark apartment at midnight, rain streaming on window glass, pale East Asian man in oversized hoodie at glowing desk, framed photo, deep cyan shadows --ar 9:16 --style raw --sref https://asset.film/styles/cyber_noir_bedroom.png`<br>🎬 **MOT**:<br>`Camera: Slow Zoom In (Speed 1). Subject: minimal breathing movement.` | `[无台词]` | **WS**<br>垂直俯角慢推 | **Amb**: 窗外密集雨声雷鸣<br>**Fol**: 主机风扇低频嗡鸣<br>**BGM**: 孤寂电钢琴单音（A minor） |
+| **02** (00:02.5-00:04.0)<br>时长: 1.5s | 桌面手部微距：放在桌角右侧的手机屏幕骤然亮起刺眼白光并持续剧烈震动。屏幕显示来电人：“妹妹——林小雨”。 | 🖼️ **IMG**:<br>`Macro close-up vertical shot of smartphone vibrating intensely, screen displaying incoming call "Sister - Lin Xiaoyu", shallow depth of field --ar 9:16 --style raw`<br>🎬 **MOT**:<br>`Camera: Static macro. Subject: phone vibrating slightly on desk surface.` | `[无台词]` | **ECU**<br>微距俯拍固定 | **Fol**: 手机高频震动摩擦声<br>**SFX**: 电子来电急促蜂鸣<br>**BGM**: 钢琴骤停，低频嗡鸣升起 |
+| **03** (00:04.0-00:05.5)<br>时长: 1.5s | 林川面部特写：手机冷白光照亮他惨白的面孔。他瞳孔猛烈收缩，喉结上下剧烈滑动，眼神陷入极度恐惧。 | 🖼️ **IMG**:<br>`Vertical close-up of East Asian man 25yo, pale skin with dark circles, messy black hair, cold screen light, pupils dilated in terror --ar 9:16 --style raw --cref https://asset.film/chars/lin_chuan_ref.png --cw 100`<br>🎬 **MOT**:<br>`Camera: Static. Subject: sudden pupil constriction, rapid throat swallow.` | 林川（极度颤抖）：<br>“不可能……小雨已经死了七天……” | **CU**<br>正面平视固定 | **Amb**: 空间死寂<br>**Fol**: 极沉重的倒抽凉气声<br>**BGM**: 大提琴不协和长音升至 7.0 |
+
+> 完整 26 镜请参阅：[👉 examples/ai_call_showcase.md](examples/ai_call_showcase.md)
 
 ---
 
@@ -35,11 +52,13 @@
 ```
 AI_grenerate_content_skill/
 ├── README.md                           # 项目说明与工业指南
+├── examples/
+│   └── ai_call_showcase.md             # 官方示范全案（《我死后的第七天，AI给我打来了电话》26镜全案）
 └── skills/
     └── ai-video-storyboard/
-        ├── SKILL.md                    # 核心 System Prompt（自包含完整闭环内核 v1.2.0）
+        ├── SKILL.md                    # 核心 System Prompt（自包含工业闭环内核 v1.2.0）
         └── references/
-            ├── production_example.md   # 生产级示范案例（快慢切节奏 / --cref 多模态资产 / 真实七项自检）
+            ├── production_example.md   # 生产级示范案例备份
             ├── storyboard_schema.json  # 工业级 17 字段 JSON Schema（支持自动化流水线对接）
             ├── prompt_engineering_guide.md # 现代 AI 工具官方参数与 I2V 管线手册
             ├── validation_checklist.md # 自动化七项自检与 13 项验收标准手册
@@ -80,7 +99,7 @@ AI_grenerate_content_skill/
 |:---:|---|---|
 | **AC-01** | **镜头时长安全窗口** | 全片 100% 镜头处于安全窗口内（默认 ≤ 3.0s，或符合指定模型窗口）。 |
 | **AC-02** | **剪辑节拍呼吸感** | 全片时长打破死板统一定长，高潮动作戏配置 1.0s~1.5s 快切，快慢张弛有度。 |
-| **AC-03** | **轴线空间合理性** | 双人及多人交互全流程无违规跳轴，视线对撞吻合空间几何。 |
+| **AC-03** | **轴线空间合理性** | 双人及多人交互全流程无违规跳轴，视线对撞完全符合空间几何。 |
 | **AC-04** | **越轴过渡合规性** | 艺术越轴必须具备轨道移动镜头、中性正面镜头或走位过渡。 |
 | **AC-05** | **核心情绪特写覆盖** | 冲突爆发点与心理转折点均配置正面面部 CU/ECU 或手部特写。 |
 | **AC-06** | **非机械化叙事设计** | 脱离逐字直译，建立镜头、倾听反应镜头与隐喻插入镜头占比 ≥ 25%。 |
@@ -88,7 +107,7 @@ AI_grenerate_content_skill/
 | **AC-08** | **角色多模态连续性** | 角色显式绑定 `--cref` 或 I2V 首帧参考资产，全片英文外观描述严格一致。 |
 | **AC-09** | **服装与道具守恒性** | 同序列内服装款式、面料颜色及道具持有状态严格闭环。 |
 | **AC-10** | **光影氛围统一性** | 场景提示词中的主光源方向、色温与胶片调色词统一锁定。 |
-| **AC-11** | **生图 Prompt 规范** | IMG 提示词完全符合 Midjourney / Flux 语法并带 `--ar 16:9` 与 `--style raw`。 |
+| **AC-11** | **生图 Prompt 规范** | IMG 提示词完全符合 Midjourney / Flux 语法并带 `--ar 16:9` 或 `--ar 9:16`。 |
 | **AC-12** | **运镜官方参数规范** | MOT 提示词采用各平台官方运镜参数（Runway 运镜 / Kling 1.6+ 轴向滑块参数）。 |
 | **AC-13** | **自检报告对齐完整** | 输出报告严格包含第 1 项至第 7 项完整真实审查结果，且所有红线项全部为 PASS。 |
 
