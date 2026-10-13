@@ -1,192 +1,116 @@
-# AI 视频工具提示词工程参考手册
+# 现代 AI 视频提示词工程与多模态资产控制手册
+*(Modern AI Video Prompt Engineering & Asset Control Manual V1.1)*
 
-本文档为分镜表第三列（英文生图/运镜提示词）的编写提供详细参考。
+本文档详细说明当前主流 AI 图像与视频生成平台在工业分镜制作中的**真实官方语法、多模态一致性控制参数与 I2V（Image-to-Video）管线规范**。
 
 ---
 
-## 一、Midjourney v6/v7 提示词结构
+## 一、工业级核心工作流：I2V（首帧生视频）标准管线
 
-### 基础框架
+在现代工业化 AI 视频生产中，**Text-to-Video (T2V) 直接纯文本生视频已被边缘化**，因为纯文字无法保证角色长相、服装和场景在多个镜头间的一致性。
 
+当前行业标准为 **I2V (Image-to-Video) 工业流水线**：
 ```
-[主体] + [动作/姿态] + [外貌/服装锚点] + [环境] + [光影] + [景别] + [风格]
-+ 技术参数
+[剧作分镜] ──► [Midjourney / Flux 批量渲染起始帧图像]
+                     │ (绑定 --cref 角色参考与 --sref 风格参考)
+                     ▼
+             [获得高一致性 Keyframe 起始帧图片]
+                     │
+                     ▼
+             [输入 Runway / Kling / MiniMax 进行 I2V 运镜与微动态驱动]
+                     │ (应用官方 Camera Control 与首尾帧技术)
+                     ▼
+             [获得 100% 角色不漂移、动作稳定的成片分镜]
 ```
 
-### 关键参数
+---
 
-| 参数 | 说明 | 推荐值 |
+## 二、图像端：多模态角色与风格一致性规范
+
+### 1. Midjourney v6 / v7 官方一致性参数
+
+| 参数 | 官方定义 | 工业推荐用法 |
 |---|---|---|
-| `--ar` | 宽高比 | `16:9`（横屏）/ `9:16`（竖屏短视频） |
-| `--s` | 风格化强度 | `250–750`（越低越写实） |
-| `--style raw` | 减少 MJ 默认美化 | 搭配写实风格使用 |
-| `--c` | 混乱度 | `0–20`（越低越可控） |
-| `--no` | 负面提示 | `--no text, watermark, logo, blurry` |
-| `--seed` | 固定种子 | 用于同一角色跨镜头一致性测试 |
+| `--cref [URL]` | **Character Reference (角色参考)** | 传入角色的白底三视图或标准立绘 URL，锁定五官与骨骼特征。 |
+| `--cw [0-100]` | **Character Weight (角色权重)** | `--cw 100`（默认值，同时锁定面部、发型与服装）；`--cw 0`（仅锁定五官脸孔，允许在不同场景更换新衣服）。 |
+| `--sref [URL]` | **Style Reference (风格参考)** | 传入目标影片的调色/光影参考图 URL，全剧所有镜头保持完全统一影调。 |
+| `--sw [0-1000]` | **Style Weight (风格权重)** | 推荐设为 `--sw 800`，确保电影色调强力附着。 |
+| `--oref [URL]` | **Object Reference (道具参考)** | 用于关键道具（如特定枪械、传家项链、特定公文包）的外观守恒。 |
+| `--ar 16:9` | **Aspect Ratio (画幅比例)** | 短剧横屏统一 `--ar 16:9`；竖屏短剧统一 `--ar 9:16`。 |
+| `--style raw` | **Raw Mode (原始摄影质感)** | 消除 Midjourney 过度润色的插画感，呈现胶片光影与真实皮肤纹理。 |
 
-### 写实电影风格锁定词库
-
+#### 标准生图 Prompt 结构示例：
 ```
-cinematic still, photorealistic, 8K, film grain, anamorphic lens,
-shallow depth of field, volumetric lighting, color graded,
-shot on Arri Alexa Mini, 35mm film aesthetic
+Close-up portrait of East Asian woman late 20s, raven-black ponytail, sharp intelligent almond eyes, faint bead of sweat on temple, dark matte windbreaker, cinematic chiaroscuro lighting, photorealistic film still, 35mm lens --ar 16:9 --style raw --cref https://asset.film/anlan.png --cw 100 --sref https://asset.film/fincher.png --sw 800
 ```
 
-### 光影描述词库
-
-| 情绪 | 光影词 |
-|---|---|
-| 温暖亲密 | warm golden hour light, soft diffused window light, amber glow |
-| 冷酷疏离 | cold blue moonlight, harsh fluorescent overhead, sterile white light |
-| 悬疑紧张 | single harsh side light, dramatic chiaroscuro, deep shadows |
-| 恐怖压迫 | sickly green tint, flickering light, underlit from below |
-| 浪漫梦幻 | soft pastel light leak, gentle backlit haze, pink-gold tones |
-| 史诗宏大 | dramatic god rays, volumetric mist, epic golden light |
+### 2. Flux 1.0 / Stable Diffusion 生态
+- **PuLID / IP-Adapter FaceID**：通过面部嵌入向量锁定角色面孔（权重推荐 0.75~0.85）。
+- **LoRA**：为定制主角训练专属 Character LoRA，在提示词中显式调用 `<lora:character_anlan:0.8>`。
+- **ControlNet OpenPose / Depth**：用于精确控制特定分镜中角色的复杂构图与肢体几何朝向。
 
 ---
 
-## 二、Flux 提示词特性
+## 三、视频端：主流平台官方运动控制与运镜参数
 
-### 与 MJ 的差异
+### 1. Runway Gen-3 / Gen-4 Alpha
 
-- Flux 更偏向自然语言描述，不使用 `--ar` 等参数标记
-- 更擅长理解完整句子描述
-- 对细节描述的响应更精确
+Runway 不使用自创的伪标记，而是依赖**官方 Camera Control 滑块 + 自然语言物理指令**：
 
-### Flux 模板
+#### 官方 Camera Control 参数映射：
+- **Pan (平移摇镜)**：`Pan Left / Right` (数值 1~10)
+- **Tilt (俯仰摇镜)**：`Tilt Up / Down` (数值 1~10)
+- **Zoom (变焦推拉)**：`Zoom In / Out` (数值 1~10)
+- **Roll (轴向旋转)**：`Roll Clockwise / Counter-clockwise` (用于灾难或失重)
+- **Camera Speed (运镜速度)**：`Speed 1 (极缓) ~ 10 (极速)`
 
+#### Runway 提示词工业书写范式：
 ```
-A cinematic still photograph of [subject description].
-[Action/pose]. [Wardrobe details]. [Environment description].
-[Lighting setup]. Shot in [shot type].
-Photorealistic, 8K resolution, film grain texture.
-Aspect ratio 16:9.
+[镜头运动参数声明] + [主体单一微动作] + [物理环境细节]
+示例：
+Camera: Slow Zoom In (Speed 2), locked on subject. The woman’s eyes dart sharply to frame-right, rapid subtle chest breathing, rain pouring on glass in blurred background.
 ```
+
+### 2. 可灵 Kling 1.6+ (工业级标准)
+
+可灵拥有最强大的三维运镜控制与首尾帧技术：
+
+#### 官方控制参数体系：
+- **运镜模式**：
+  - `水平平移 (X)`：[-10 到 +10]
+  - `垂直平移 (Y)`：[-10 到 +10]
+  - `前后变焦 (Z)`：[-10 到 +10]（推进取正，拉远取负）
+  - `水平旋转 (Yaw)`：[-10 到 +10]
+  - `垂直俯仰 (Pitch)`：[-10 到 +10]
+  - `滚动旋转 (Roll)`：[-10 到 +10]
+- **首尾帧过渡 (First & Last Frame)**：
+  - 提供镜头开始第一帧与结束最后一帧，AI 负责在两帧之间生成绝对准确且不可变形的物理过渡（最适合精准的开门、转身、倒下等镜头）。
+- **元素控制 (Elements)**：在官方库中上传角色模型，保证 T2V/I2V 均不换脸。
+
+#### Kling 提示词书写范式：
+```
+景别：特写。机位平视固定。微动作：手部戴黑色手套，以极快速度将金属U盘笔直拔出机箱插槽，手指带有轻微运动模糊。画面色调冷蓝，高对比度。
+```
+
+### 3. 海螺 MiniMax (Hailuo)
+
+海螺模型对**自然语言的动作动词**理解极深，忌讳机械堆砌参数词，必须采用精炼的**电影指令级动词**：
+- **原则**：只描述可见动作与摄影机真实轨迹，少用抽象形容词。
+- **示例**：
+  ```
+  Static camera. The woman's eyes whip to the right in sudden panic, her breath catching in her throat. Deep moody shadows, cold blue lighting.
+  ```
 
 ---
 
-## 三、Runway Gen-3/4 Alpha 运动提示词
+## 四、镜头时长与剪辑节奏工程准则
 
-### 结构
+| 场景类型 | 推荐单镜头时长 | 典型景别与运镜 | 视听目的 |
+|---|---|---|---|
+| **悬念建立 / 环境交代** | 2.5s ~ 3.5s | WS / ELS，缓慢推进 (Slow Dolly In) | 交代地理坐标、世界观氛围、沉浸感建立 |
+| **人物心理与对话反应** | 1.5s ~ 2.5s | MCU / CU，固定 (Locked Static) | 捕捉微表情、呼吸与眼神焦距变化 |
+| **突发危机与动作戏** | **1.0s ~ 1.5s (快切)** | ECU / CU，极快动作或快速推镜头 | 极速提升心率、制造窒息感与动作压迫 |
+| **结局余味 / 悬念留白** | 2.5s ~ 4.0s | MS / WS，缓慢拉远 (Dolly Out) 或定格 | 情绪释放、意象升华、观众心理回甘 |
 
-```
-Camera: [camera movement description]
-Subject: [subject motion description]
-Background: [environmental motion description]
-```
-
-### 运动强度控制词
-
-| 强度 | 英文描述 |
-|---|---|
-| 极微 | imperceptible, barely noticeable, ultra-subtle |
-| 轻微 | subtle, gentle, slight, soft |
-| 中等 | moderate, steady, smooth |
-| 强烈 | dramatic, intense, rapid, sharp |
-| 极端 | explosive, violent, extreme |
-
-### 常用摄影机运动组合
-
-```
-Camera: slow dolly in, gentle steady speed.
-Camera: static, locked-off shot.
-Camera: lateral tracking right, moderate pace.
-Camera: slow crane up revealing landscape.
-Camera: handheld with subtle shake, documentary feel.
-Camera: slow orbit clockwise around subject.
-Camera: whip pan left to right, fast.
-Camera: very slow zoom in, almost imperceptible.
-```
-
-### 常用主体运动描述
-
-```
-Subject: subtle breathing motion, slight chest rise and fall.
-Subject: slow head turn from left to right.
-Subject: single tear rolling down cheek.
-Subject: fingers slowly clenching into fist.
-Subject: hair gently blowing in breeze.
-Subject: walking forward at slow pace.
-Subject: eyes darting nervously left and right.
-Subject: mouth opening slightly as if about to speak.
-```
-
----
-
-## 四、Kling 1.6+ 运动提示词
-
-### 结构特点
-
-- Kling 偏好简洁直接的运动描述
-- 支持中英文混合（但英文效果更稳定）
-- 建议每个维度（摄影机/角色/环境）各一句
-
-### 模板
-
-```
-Camera motion: [movement type and direction].
-Character action: [single specific action].
-Environment: [ambient motion details].
-Style: cinematic, photorealistic.
-```
-
-### 注意事项
-
-- 避免描述超过 2 个并发动作
-- 角色动作必须是单一微动态
-- 明确标注动作的起止状态
-
----
-
-## 五、MiniMax Hailuo 运动提示词
-
-### 结构特点
-
-- 更接近自然语言叙述
-- 将场景描述和运动融合在一段话中
-- 对氛围和情绪词响应较好
-
-### 模板
-
-```
-A cinematic scene where [subject] [action] in [environment].
-The camera [movement description].
-[Atmospheric and mood details].
-Cinematic quality, smooth natural motion, photorealistic.
-```
-
----
-
-## 六、跨镜头一致性维护策略
-
-### 角色一致性
-
-1. **锚点词复用**：每个镜头的 IMG prompt 必须包含角色的完整锚点词
-2. **种子锁定**（MJ）：使用 `--seed` 参数在关键镜头间保持一致性
-3. **参考图引导**：使用前序镜头生成的图像作为后续镜头的参考（`--cref`）
-4. **负面提示统一**：所有镜头使用相同的 `--no` 列表
-
-### 场景一致性
-
-1. **环境锚点词复用**：同一场景的所有镜头共享环境描述
-2. **光影一致**：同一场景同一时间段的光影描述保持统一
-3. **色温锁定**：明确标注色温（warm 3200K / neutral 5600K / cool 7000K+）
-
-### 情绪一致性
-
-1. **渐进变化**：情绪关键词应在相邻镜头间呈现渐进变化
-2. **避免跳变**：不要在相邻镜头中突然切换完全相反的情绪描述
-3. **动作衔接**：上一镜的结束动作 = 下一镜的起始状态
-
----
-
-## 七、常见错误与修正
-
-| ❌ 错误 | ✅ 修正 | 原因 |
-|---|---|---|
-| `a man running and jumping over a table` | 拆分为两个镜头 | 复合动作导致穿模 |
-| `beautiful cinematic scene` | 具体描述光影和构图 | 模糊词无法生成精确画面 |
-| `the character looks sad` | `brows furrowed, eyes downcast, lips slightly parted, hollow gaze` | 情绪需要具象化 |
-| 不同镜头中角色描述不一致 | 统一使用锚点词 | 会导致角色外观漂移 |
-| `Camera moves around while character runs and talks` | 拆分运动维度 | 并发运动超出模型能力 |
-| 使用中文在英文prompt中 | 全部翻译为英文 | 影响模型理解 |
+> [!TIP]
+> 绝不可整部片子全部采用单一相同秒数（如清一色 3 秒）。真正的优秀导演必须像谱写交响乐一样，让镜头时长有长有短、快慢交替。
